@@ -1,0 +1,61 @@
+commit c7dab94e94641a036e856b21782affd29fad2aab
+Author: Nick Craig-Wood <nick@craig-wood.com>
+Date:   Tue Feb 17 16:55:43 2026 +0000
+
+    Version v1.73.1
+
+commit 615a6f57bb8e7ea56815b07fc10ad23e036054dd
+Author: Nick Craig-Wood <nick@craig-wood.com>
+Date:   Tue Feb 17 16:48:52 2026 +0000
+
+    build: fix build using go 1.26.0 instead of go 1.25.7
+    
+    In the actions config use Go ~1.25.7 to pin the go version to 1.25.x,
+    x >= 7.
+    
+    Before this it was choosing Go 1.26.0 which isn't what we want.
+
+commit b52fab68682f15adf49213720ca5dd94cd7eb3e0
+Author: Nick Craig-Wood <nick@craig-wood.com>
+Date:   Wed Dec 31 17:59:36 2025 +0000
+
+    fs/march: fix runtime: program exceeds 10000-thread limit
+    
+    Before this change when doing a sync with `--no-traverse` and
+    `--files-from` we could call `NewObject` a total of `--checkers` *
+    `--checkers` times simultaneously.
+    
+    With `--checkers 128` this can exceed the 10,000 thread limit and
+    fails when run on a local to local transfer because `NewObject` calls
+    `lstat` which is a syscall which needs an OS thread of its own.
+    
+    This patch uses a weighted semaphore to limit the number of
+    simultaneous calls to `NewObject` to `--checkers` instead which won't
+    blow the 10,000 thread limit and is far more sensible use of OS
+    resources.
+    
+    Fixes #9073
+
+commit b740e9c29972b06165676d23f314c340c4a0e7ba
+Author: Nick Craig-Wood <nick@craig-wood.com>
+Date:   Mon Feb 16 16:03:40 2026 +0000
+
+    accounting: fix missing server side stats from core/stats rc
+    
+    These stats weren't being updated in the global stats read by rc
+    core/stats:
+    
+    - transferQueue
+    - deletesSize
+    - serverSideCopies
+    - serverSideCopyBytes
+    - serverSideMoves
+    - serverSideMoveBytes
+
+commit 3b63bd280c0807a725025cdc28cbd8e60ce8dbfb
+Author: Nick Craig-Wood <nick@craig-wood.com>
+Date:   Fri Feb 6 13:02:18 2026 +0000
+
+    pacer: re-read the sleep time as it may be stale
+    
+    Before this change we read sleepTime before acquiring the pacer token

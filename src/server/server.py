@@ -1,8 +1,8 @@
 # --- IMPORTAÇÕES ---
-import socket  # Biblioteca nativa para comunicação de rede (abrir o "cano" de dados)
-import os      # Biblioteca para manipular pastas e caminhos de arquivos no sistema
-from Crypto.Cipher import AES # Motor de criptografia profissional (mais leve que o Fernet)
-from tqdm import tqdm         # Biblioteca que gera a barra de progresso visual no terminal
+import socket
+import os     
+from Crypto.Cipher import AES 
+from tqdm import tqdm         
 
 # --- CONFIGURAÇÕES DE REDE ---
 HOST = '0.0.0.0'  # Escuta em todas as placas de rede (Ethernet, Wi-Fi, Localhost)
@@ -11,7 +11,7 @@ CHAVE_AES = b'uY7ByX6pW9j2Z8kL'  # Chave secreta de 16 bytes (o "segredo" compar
 NONCE = b'12345678'             # Número especial para o modo CTR (deve ser igual no cliente)
 
 def iniciar_servidor():
-    # --- PASSO 1: LOCALIZAR A PASTA DE DESTINO ---
+    # --- PASSO 1: LOCALIZA A PASTA DE DESTINO ---
     # Pegamos o caminho onde este script está (pasta /server)
     diretorio_do_script = os.path.dirname(os.path.abspath(__file__))
     # Navegamos: subimos um nível (..) para /src e entramos em /app/teste

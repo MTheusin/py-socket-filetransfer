@@ -1,12 +1,12 @@
 # --- IMPORTAÇÕES ---
-import socket  # Para conectar ao servidor
-import os      # Para ler o tamanho do arquivo no HD
-from Crypto.Cipher import AES  # Para proteger os dados antes de enviar
-from tqdm import tqdm          # Para você ver a velocidade de envio (MB/s)
+import socket
+import os
+from Crypto.Cipher import AES
+from tqdm import tqdm
 
 # --- CONFIGURAÇÕES DE DESTINO ---
 # Troque pelo IP da sua VM no VMware quando for testar na rede
-HOST = '127.0.0.1' 
+HOST = '172.20.10.9' 
 PORTA = 5001
 CHAVE_AES = b'uY7ByX6pW9j2Z8kL' # Deve ser IGUAL à do servidor
 NONCE = b'12345678'             # Deve ser IGUAL à do servidor

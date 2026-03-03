@@ -7,7 +7,10 @@
         body { font-family: sans-serif; margin: 40px; background: #f4f4f9; }
         h2 { color: #333; }
         ul { list-style: none; padding: 0; }
-        li { background: #fff; margin: 5px 0; padding: 15px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; justify-content: space-between; }
+        li { background: #fff; margin: 5px 0; padding: 15px; border-radius: 5px; 
+             box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
+        .info { display: flex; flex-direction: column; }
+        .tamanho { font-size: 0.85em; color: #666; margin-top: 4px; }
         a { text-decoration: none; color: #007bff; font-weight: bold; }
         a:hover { color: #0056b3; }
     </style>
@@ -17,8 +20,11 @@
     <ul>
         {% for arquivo in arquivos %}
         <li>
-            <span>{{ arquivo }}</span>
-            <a href="{{ url_for('baixar_arquivo', nome_arquivo=arquivo) }}">Download</a>
+            <div class="info">
+                <strong>{{ arquivo.nome }}</strong>
+                <span class="tamanho">Tamanho: {{ arquivo.tamanho }}</span>
+            </div>
+            <a href="{{ url_for('baixar_arquivo', nome_arquivo=arquivo.nome) }}">Download</a>
         </li>
         {% endfor %}
     </ul>

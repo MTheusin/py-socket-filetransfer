@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Repositório de Arquivos - DataUnique</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; background: #f4f4f9; }
+        h2 { color: #333; }
+        ul { list-style: none; padding: 0; }
+        li { background: #fff; margin: 5px 0; padding: 15px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; justify-content: space-between; }
+        a { text-decoration: none; color: #007bff; font-weight: bold; }
+        a:hover { color: #0056b3; }
+    </style>
+</head>
+<body>
+    <h2>📁 Arquivos Recebidos via Socket</h2>
+    <ul>
+        {% for arquivo in arquivos %}
+        <li>
+            <span>{{ arquivo }}</span>
+            <a href="{{ url_for('baixar_arquivo', nome_arquivo=arquivo) }}">Download</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
